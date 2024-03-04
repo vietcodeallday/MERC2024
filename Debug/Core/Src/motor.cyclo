@@ -1,0 +1,4 @@
+../Core/Src/motor.c:15:6:Run	1
+../Core/Src/motor.c:21:6:init_State	1
+../Core/Src/motor.c:24:6:state_Update	6
+../Core/Src/motor.c:59:13:Direction	1
