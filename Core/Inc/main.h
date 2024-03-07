@@ -60,22 +60,30 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define DIRECTION_2_Pin GPIO_PIN_6
+#define DIRECTION_1_Pin GPIO_PIN_3
+#define DIRECTION_1_GPIO_Port GPIOC
+#define CHB_3_Pin GPIO_PIN_2
+#define CHB_3_GPIO_Port GPIOA
+#define DIRECTION_3_Pin GPIO_PIN_3
+#define DIRECTION_3_GPIO_Port GPIOA
+#define CHB_2_Pin GPIO_PIN_5
+#define CHB_2_GPIO_Port GPIOC
+#define CHA_2_Pin GPIO_PIN_8
+#define CHA_2_GPIO_Port GPIOC
+#define DIRECTION_2_Pin GPIO_PIN_12
 #define DIRECTION_2_GPIO_Port GPIOA
-#define DIRECTION_1_Pin GPIO_PIN_7
-#define DIRECTION_1_GPIO_Port GPIOA
-#define CH_A1_Pin GPIO_PIN_4
-#define CH_A1_GPIO_Port GPIOC
-#define CH_B1_Pin GPIO_PIN_5
-#define CH_B1_GPIO_Port GPIOC
-#define CH_A2_Pin GPIO_PIN_0
-#define CH_A2_GPIO_Port GPIOB
-#define CH_B2_Pin GPIO_PIN_1
-#define CH_B2_GPIO_Port GPIOB
+#define CHA_1_Pin GPIO_PIN_10
+#define CHA_1_GPIO_Port GPIOC
+#define CHB_1_Pin GPIO_PIN_12
+#define CHB_1_GPIO_Port GPIOC
+#define CHA_3_Pin GPIO_PIN_3
+#define CHA_3_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 extern TIM_HandleTypeDef htim4;
-extern TIM_HandleTypeDef htim5;
+extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim2;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
