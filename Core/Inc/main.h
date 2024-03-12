@@ -31,8 +31,10 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "pid.h"
+#include "delay.h"
 #include "motor.h"
-
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -60,12 +62,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define DIRECTION_3_Pin GPIO_PIN_0
+#define DIRECTION_3_GPIO_Port GPIOC
 #define DIRECTION_1_Pin GPIO_PIN_3
 #define DIRECTION_1_GPIO_Port GPIOC
-#define CHB_3_Pin GPIO_PIN_2
-#define CHB_3_GPIO_Port GPIOA
-#define DIRECTION_3_Pin GPIO_PIN_3
-#define DIRECTION_3_GPIO_Port GPIOA
 #define CHB_2_Pin GPIO_PIN_5
 #define CHB_2_GPIO_Port GPIOC
 #define CHA_2_Pin GPIO_PIN_8
@@ -80,10 +80,17 @@ void Error_Handler(void);
 #define CHA_3_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+#define MOTOR_1	1
+#define MOTOR_2	2
+#define MOTOR_3	3
+
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim2;
 
+extern PID_Param_t pid_par;
+extern volatile double rpm;
+extern void pid_config(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
