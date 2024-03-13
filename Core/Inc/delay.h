@@ -32,5 +32,5 @@ extern volatile uint64_t ms,rms;
 extern uint64_t millis(void);
 void systick_init_ms(uint32_t freq);
 void delay(uint32_t delay);
-
+void reset_tick(void);
 #endif

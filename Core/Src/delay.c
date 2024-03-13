@@ -44,9 +44,10 @@ uint64_t millis(void)
 	return rms;
 	}
 
-//void SysTick_Handler(void){
-//ms++;
-//}
+void reset_tick(void){
+	ms=0;
+	rms=0;
+}
 
 void delay(uint32_t delay)
 	{

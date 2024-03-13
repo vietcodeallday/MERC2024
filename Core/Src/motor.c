@@ -65,11 +65,16 @@ void Robot_Move(float Vd, float Theta, float Vtheta){
 double rpm_to_duty(double rpm){
 	return (98.15-0.6*rpm);
 }
-void set_duty_cycle(double rpm, double out){
+void set_duty_cycle(int motor, double rpm, double out){
 	rpm=rpm+out;
 	double duty = rpm_to_duty(rpm);
-	__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_1, duty);
+	if(motor==MOTOR_1){
+		__HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, duty);
+	}
+	if(motor==MOTOR_2){
+		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, duty);
+	}
+	if(motor==MOTOR_3){
+		__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, duty);
+	}
 }
-//void get_rpm(void){
-//
-//}

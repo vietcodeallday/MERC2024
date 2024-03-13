@@ -9,7 +9,12 @@ float Kp,Ki,Kd,Ts,Outmin,Outmax
 ,set_point
 ,antiwinduperror;
 int windup;
-float error,prev_input,Ki_sum;
+float error
+,prev_input_1
+,prev_input_2
+,prev_input_3
+,prev_input
+,Ki_sum;
 
 
 void PID_init(PID_Param_t *par){
@@ -32,6 +37,8 @@ void PID_init(PID_Param_t *par){
 float PID_Calculation(int motor, float input)
 	{
 	set_point=(motor==MOTOR_1)? set_point_motor_1: ((motor==MOTOR_2)? set_point_motor_2:set_point_motor_3);
+	prev_input = (motor==MOTOR_1)? prev_input_1:((motor==MOTOR_2)? prev_input_2:prev_input_3);
+
 	error=(set_point-input);
 
 	float out;

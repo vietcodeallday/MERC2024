@@ -1,3 +1,3 @@
 ../Core/Src/motor.c:30:6:Robot_Move	80	static
 ../Core/Src/motor.c:65:8:rpm_to_duty	16	static
-../Core/Src/motor.c:68:6:set_duty_cycle	40	static
+../Core/Src/motor.c:68:6:set_duty_cycle	48	static

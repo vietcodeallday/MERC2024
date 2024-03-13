@@ -12,7 +12,11 @@
 #include "pid.h"
 #include "delay.h"
 #include <stdio.h>
-extern void set_duty_cycle(double rpm, double out);
+
+#define MOTOR_1	1
+#define MOTOR_2	2
+#define MOTOR_3	3
+extern void set_duty_cycle(int motor, double rpm, double out);
 extern void Robot_Move(float Vd, float Theta, float Vtheta);
 
 #define CLOCK_WISE 1
