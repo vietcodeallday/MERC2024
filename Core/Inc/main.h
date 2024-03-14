@@ -75,10 +75,13 @@ void Error_Handler(void);
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim4;
 
 extern PID_Param_t pid_par;
-extern volatile float rpm;
 extern void pid_config(void);
+
+extern volatile double rpm_1, rpm_2, rpm_3;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

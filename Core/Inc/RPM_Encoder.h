@@ -7,7 +7,12 @@
 #include "stm32f4xx.h"
 #include "stdint.h"
 
-extern float get_rpm(int motor);
+//extern float rpm;
+//extern uint16_t cnt;
+//extern uint16_t preCnt;
+//extern int loop;
+
+extern double get_rpm(int motor);
 
 
 #endif /* RPM_ENCODER_H_ */

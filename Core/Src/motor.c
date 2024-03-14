@@ -60,21 +60,55 @@ void Robot_Move(float Vd, float Theta, float Vtheta){
 	 V2 = Vmax*V2/10000;
 	 V3 = Vmax*V3/10000;
 
-
+	 if(V1<0){
+		 Rotation(MOTOR_1, CLOCK_WISE);
+		 V1=fabs(V1);
+	 } else{
+		 Rotation(MOTOR_1, CLOCK_WISE);
+	 }
+	 if(V2<0){
+		 Rotation(MOTOR_2, !CLOCK_WISE);
+		 V2=fabs(V2);
+	 } else{
+		 Rotation(MOTOR_2, CLOCK_WISE);
+	 }
+	 if(V3<0){
+		 Rotation(MOTOR_3, !CLOCK_WISE);
+		 V3=fabs(V3);
+	 } else{
+		 Rotation(MOTOR_3, CLOCK_WISE);
+	 }
 }
 double rpm_to_duty(double rpm){
 	return (98.15-0.6*rpm);
 }
 void set_duty_cycle(int motor, double rpm, double out){
-	rpm=rpm+out;
 	double duty = rpm_to_duty(rpm);
 	if(motor==MOTOR_1){
-		__HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, duty);
+		__HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, (duty+out));
 	}
 	if(motor==MOTOR_2){
-		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, duty);
+		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, (duty+out));
 	}
 	if(motor==MOTOR_3){
-		__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, duty);
+		__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_3, (duty+out));
 	}
+}
+void Rotation(int motor, int rotation){
+	if(motor==MOTOR_1){
+		if(rotation==CLOCK_WISE){
+			HAL_GPIO_WritePin(DIRECTION_1_GPIO_Port, DIRECTION_1_Pin, CLOCK_WISE);
+		} else 	HAL_GPIO_WritePin(DIRECTION_1_GPIO_Port, DIRECTION_1_Pin, !CLOCK_WISE);
+	}
+	if(motor==MOTOR_2){
+		if(rotation==CLOCK_WISE){
+			HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, CLOCK_WISE);
+		} else 	HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, !CLOCK_WISE);
+	}
+	if(motor==MOTOR_3){
+		if(rotation==CLOCK_WISE){
+			HAL_GPIO_WritePin(DIRECTION_3_GPIO_Port, DIRECTION_3_Pin, CLOCK_WISE);
+		} else 	HAL_GPIO_WritePin(DIRECTION_3_GPIO_Port, DIRECTION_3_Pin, !CLOCK_WISE);
+	}
+
 }

@@ -18,7 +18,8 @@
 #define MOTOR_3	3
 extern void set_duty_cycle(int motor, double rpm, double out);
 extern void Robot_Move(float Vd, float Theta, float Vtheta);
-
+double rpm_to_duty(double rpm);
+void Rotation(int motor, int rotation);
 #define CLOCK_WISE 1
 #define PI 3.141592654
 
