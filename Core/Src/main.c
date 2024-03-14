@@ -88,8 +88,8 @@ void pid_config(void){
 	pid_par.Set_point_motor_1=V1;
 	pid_par.Set_point_motor_2=V2;
 	pid_par.Set_point_motor_3=V3;
-	pid_par.Outmin=20;
-	pid_par.Outmax=80;
+	pid_par.Outmin=-10;
+	pid_par.Outmax=10;
 
 	PID_init(&pid_par);
 }
@@ -129,13 +129,18 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   systick_init_ms(8000000);
-	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 0);
-	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 0); //motor 2
-	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, 0); //motor 3
+//	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 100);
+//	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 100); //motor 2
+//	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, 100); //motor 3
 
-	HAL_GPIO_WritePin(DIRECTION_1_GPIO_Port, DIRECTION_1_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DIRECTION_3_GPIO_Port, DIRECTION_3_Pin, GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(DIRECTION_1_GPIO_Port, DIRECTION_1_Pin, GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(DIRECTION_3_GPIO_Port, DIRECTION_3_Pin, GPIO_PIN_SET);
+
+//	flag_rot_1=true;
+//	flag_rot_2=true;
+//	flag_rot_3=true;
+
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
@@ -152,16 +157,23 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_Delay(1000);
+  HAL_Delay(2000);
+
+	Robot_Move(1, 90, 0);
+	V1=v2rpm(V1);
+	V2=v2rpm(V2);
+	V3=v2rpm(V3);
+	printf("V1= %.2f rpm \t V2= %.2f rpm \t V3= %.2f rpm \r\n", V1,V2,V3);
+//
+	pid_config();
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-		//	Robot_Move(50, 90, 0);
-//	pid_config();
-
+/*
+ * MAX 1m/s
+ */
 	rpm_1=get_rpm(MOTOR_1);
 	rpm_2=get_rpm(MOTOR_2);
 	rpm_3=get_rpm(MOTOR_3);
@@ -169,17 +181,16 @@ int main(void)
 
 	printf("rpm_1: %.2f \t rpm_2: %.2f \t rpm_3: %.2f \r \n", rpm_1, rpm_2, rpm_3);
 
-//	if(millis()%(uint64_t)pid_par.Ts==0){
-//		out_1=PID_Calculation(MOTOR_1, rpm);
-//		out_2=PID_Calculation(MOTOR_2, rpm);
-//		out_3=PID_Calculation(MOTOR_3, rpm);
-//		set_duty_cycle(MOTOR_1, rpm, out_1);
-//		set_duty_cycle(MOTOR_2, rpm, out_2);
-//		set_duty_cycle(MOTOR_3, rpm, out_3);
-//	}
-//	if(millis()%10==0){
-//		printf("rpm: %f \t out: %f \r \n", rpm, out_1);
-//	}
+	if(millis()%(uint64_t)pid_par.Ts==0){
+		out_1=PID_Calculation(MOTOR_1, rpm_1);
+		out_2=PID_Calculation(MOTOR_2, rpm_2);
+		out_3=PID_Calculation(MOTOR_3, rpm_3);
+		set_duty_cycle(MOTOR_1, rpm_1, out_1);
+		set_duty_cycle(MOTOR_2, rpm_2, out_2);
+		set_duty_cycle(MOTOR_3, rpm_3, out_3);
+		printf("out_1: %f \t out_2: %f \t out_3: %f \r \n \r\n",out_1,out_2,out_3);
+
+	}
   }
   /* USER CODE END 3 */
 }

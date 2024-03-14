@@ -34,7 +34,7 @@ void PID_init(PID_Param_t *par){
 	}
 
 
-float PID_Calculation(int motor, float input)
+float PID_Calculation(int motor, double input)
 	{
 	set_point=(motor==MOTOR_1)? set_point_motor_1: ((motor==MOTOR_2)? set_point_motor_2:set_point_motor_3);
 	prev_input = (motor==MOTOR_1)? prev_input_1:((motor==MOTOR_2)? prev_input_2:prev_input_3);
@@ -63,6 +63,12 @@ float PID_Calculation(int motor, float input)
 	Ki_sum=Ki_sum+(Ki_sum);
 	if(out>Outmax){out=Outmax;}
 	if(out<Outmin){out=Outmin;}
-	prev_input=input;
+	if(motor==MOTOR_1){
+		prev_input_1=input;
+	}else if(motor==MOTOR_2){
+		prev_input_2=input;
+	}else{
+		prev_input_3=input;
+	}
 	return out;
 	}

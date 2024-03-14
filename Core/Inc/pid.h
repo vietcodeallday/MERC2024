@@ -27,6 +27,6 @@ typedef struct
 
 
 extern void PID_init(PID_Param_t *par);
-extern float PID_Calculation(int motor, float input);
+extern float PID_Calculation(int motor, double input);
 
 #endif /* PID_H_ */
