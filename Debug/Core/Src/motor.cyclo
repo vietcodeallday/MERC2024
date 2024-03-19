@@ -1,5 +1,5 @@
-../Core/Src/motor.c:33:6:Robot_Move	7
-../Core/Src/motor.c:86:8:rpm_to_duty	1
-../Core/Src/motor.c:89:6:set_duty_cycle	4
-../Core/Src/motor.c:101:6:Rotation	7
-../Core/Src/motor.c:132:8:v2rpm	1
+../Core/Src/motor.c:34:6:Robot_Move	7
+../Core/Src/motor.c:87:8:rpm_to_duty	1
+../Core/Src/motor.c:91:6:set_duty_cycle	6
+../Core/Src/motor.c:109:6:Rotation	7
+../Core/Src/motor.c:140:8:v2rpm	1

@@ -11,22 +11,22 @@ typedef enum
 
 typedef struct
 	{
-	float Kp;
-	float Ki;
-	float Kd;
-	float Ts;
-	float Set_point_motor_1;
-	float Set_point_motor_2;
-	float Set_point_motor_3;
-	float Anti_windup_error;
-	float Outmin;
-	float Outmax;
+	double Kp;
+	double Ki;
+	double Kd;
+	double Ts;
+	double Set_point_motor_1;
+	double Set_point_motor_2;
+	double Set_point_motor_3;
+	double Anti_windup_error;
+	double Outmin;
+	double Outmax;
 	int Anti_windup;
 
 	}PID_Param_t;
-
+extern double Outmin, Outmax;
 
 extern void PID_init(PID_Param_t *par);
-extern float PID_Calculation(int motor, double input);
+extern double PID_Calculation(int motor, double input);
 
 #endif /* PID_H_ */

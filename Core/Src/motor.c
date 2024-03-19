@@ -24,10 +24,11 @@
 ////	HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, motor.direction_right);
 //}
 
-double V1, V2, V3=0;
+double V1, V2, V3;
 bool flag_rot_1,
 flag_rot_2,
-flag_rot_3;
+flag_rot_3=false;
+
 
 
 void Robot_Move(float Vd, float Theta, float Vtheta){
@@ -84,18 +85,25 @@ void Robot_Move(float Vd, float Theta, float Vtheta){
 	 }
 }
 double rpm_to_duty(double rpm){
-	return (98.15-0.6*rpm);
+	double duty=(98.15-0.6*rpm);
+	return duty;
 }
 void set_duty_cycle(int motor, double rpm, double out){
-	double duty = rpm_to_duty(rpm);
+	double duty = rpm_to_duty(rpm)+fabs(out);
+//	duty=(out<0)?duty+fabs(out):duty+fabs(out);
+//	out=rpm_to_duty(out);
+	if(duty>100){duty=100;}
+	if(duty<0){duty=0;}
+	printf("duty la:%f \r\n",duty);
+
 	if(motor==MOTOR_1){
-		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, (duty+out));
+		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, duty);
 	}
 	if(motor==MOTOR_2){
-		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, (duty+out));
+		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, duty);
 	}
 	if(motor==MOTOR_3){
-		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, (duty+out));
+		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, duty);
 	}
 }
 void Rotation(int motor, int rotation){
