@@ -24,9 +24,10 @@ typedef struct
 	int Anti_windup;
 
 	}PID_Param_t;
+extern int ble;
 extern double Outmin, Outmax;
 
 extern void PID_init(PID_Param_t *par);
 extern double PID_Calculation(int motor, double input);
-
+extern void PID(void);
 #endif /* PID_H_ */

@@ -80,17 +80,17 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 void pid_config(void){
-	pid_par.Kp=1.4;
-	pid_par.Ki=0.001;
-	pid_par.Kd=1;
+	pid_par.Kp=5;
+	pid_par.Ki=3;
+	pid_par.Kd=3;
 	pid_par.Ts=1;
 	pid_par.Anti_windup=Anti_windup_disabled;
 	pid_par.Anti_windup_error=10;
 	pid_par.Set_point_motor_1=V1;
 	pid_par.Set_point_motor_2=V2;
-	pid_par.Set_point_motor_3=50;
-	pid_par.Outmin=10;
-	pid_par.Outmax=170;
+	pid_par.Set_point_motor_3=V3;
+	pid_par.Outmin=-5;
+	pid_par.Outmax=5;
 
 	PID_init(&pid_par);
 }
@@ -130,9 +130,9 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   systick_init_ms(8000000);
-	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 40);
-	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 50); //motor 2
-	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, 80); //motor 3
+	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 100);
+	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 100); //motor 2
+	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, 100); //motor 3
 
 //	HAL_GPIO_WritePin(DIRECTION_1_GPIO_Port, DIRECTION_1_Pin, GPIO_PIN_RESET);
 //	HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, GPIO_PIN_RESET);
@@ -162,52 +162,17 @@ int main(void)
   /*
    * max is 1m/s
    */
-	Robot_Move(1, 90, 0);
-//	V1=v2rpm(V1);
-//	V2=v2rpm(V2);
-//	V3=v2rpm(V3);
-	V3=50;
-	pid_config();
-	HAL_Delay(2000);
+	Robot_Move(1, 225, 0);
+
+	HAL_Delay(500);
 
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  PID();
     /* USER CODE BEGIN 3 */
-//	printf("V1= %.2f rpm \t V2= %.2f rpm \t V3= %.2f rpm \r\n", V1,V2,V3);
-
-/*
- * MAX 1m/s
- */
-//	rpm_1=get_rpm(MOTOR_1);
-//	rpm_2=get_rpm(MOTOR_2);
-//	rpm_3=get_rpm(MOTOR_3);
-//	  rpm_3=40;
-
-//	if(fabs(rpm_3-V3)>=2){
-//		if(millis()%(uint64_t)pid_par.Ts==0){
-			rpm_3=get_rpm(MOTOR_3);
-//			rpm_3=70;
-
-	//		out_1=PID_Calculation(MOTOR_1, rpm_1);
-	//		out_2=PID_Calculation(MOTOR_2, rpm_2);
-			out_3=PID_Calculation(MOTOR_3, rpm_3);
-	//		set_duty_cycle(MOTOR_1, rpm_1, out_1);
-	//		set_duty_cycle(MOTOR_2, rpm_2, out_2);
-			set_duty_cycle(MOTOR_3, rpm_3, out_3);
-//		}
-		printf("out_1: %f \t out_2: %f \t out_3: %f \r \n \r\n",out_1,out_2,out_3);
-		printf("rpm_1: %.2f \t rpm_2: %.2f \t rpm_3: %.2f \r \n", rpm_1, rpm_2, rpm_3);
-		HAL_Delay(1000);
-//	}
-//	  rpm_3=get_rpm(MOTOR_3);
-//	rpm_3=159;
-//	  printf("rpm_1: %.2f \t rpm_2: %.2f \t rpm_3: %.2f \r \n", rpm_1, rpm_2, rpm_3);
-//	  out_3=PID_Calculation(MOTOR_3, rpm_3);
-//	  printf("out_1: %f \t out_2: %f \t out_3: %f \r \n \r\n",out_1,out_2,out_3);
-//	  set_duty_cycle(MOTOR_3, rpm_3, out_3);
   }
+
   /* USER CODE END 3 */
 }
 

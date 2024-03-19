@@ -81,6 +81,7 @@ extern PID_Param_t pid_par;
 extern void pid_config(void);
 
 extern double rpm_1, rpm_2, rpm_3;
+extern double out_1, out_2, out_3;
 
 /* USER CODE END Private defines */
 

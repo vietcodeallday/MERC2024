@@ -21,7 +21,7 @@
 #define PI 3.141592654
 #define diameter 120/1000
 
-extern void set_duty_cycle(int motor, double rpm, double out);
+extern void set_duty_cycle(int motor, double out);
 extern void Robot_Move(float Vd, float Theta, float Vtheta);
 double rpm_to_duty(double rpm);
 void Rotation(int motor, int rotation);
@@ -29,6 +29,9 @@ double v2rpm (double vantoc);
 
 
 extern double V1, V2, V3;
-extern bool flag_rot_1,flag_rot_2,flag_rot_3;
+extern double duty_V1, duty_V2, duty_V3;
 
+extern bool flag_rot_1,flag_rot_2,flag_rot_3;
+extern double prev_duty_1, prev_duty_2, prev_duty_3;
+extern double duty;
 #endif /* INC_MOTOR_H_ */
