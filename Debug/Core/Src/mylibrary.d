@@ -1,5 +1,5 @@
-Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.c ../Core/Inc/main.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+Core/Src/mylibrary.o: ../Core/Src/mylibrary.c ../Core/Inc/mylibrary.h \
+ ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
@@ -28,8 +28,8 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/pid.h ../Core/Inc/delay.h ../Core/Inc/motor.h \
- ../Core/Inc/main.h ../Core/Inc/RPM_Encoder.h ../Core/Inc/mylibrary.h \
- ../Core/Inc/stm32f4xx_it.h
+ ../Core/Inc/RPM_Encoder.h ../Core/Inc/mylibrary.h
+../Core/Inc/mylibrary.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -62,7 +62,5 @@ Core/Src/stm32f4xx_it.o: ../Core/Src/stm32f4xx_it.c ../Core/Inc/main.h \
 ../Core/Inc/pid.h:
 ../Core/Inc/delay.h:
 ../Core/Inc/motor.h:
-../Core/Inc/main.h:
 ../Core/Inc/RPM_Encoder.h:
 ../Core/Inc/mylibrary.h:
-../Core/Inc/stm32f4xx_it.h:

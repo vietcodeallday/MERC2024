@@ -29,7 +29,7 @@ Core/Src/RPM_Encoder.o: ../Core/Src/RPM_Encoder.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/pid.h ../Core/Inc/delay.h ../Core/Inc/motor.h \
- ../Core/Inc/RPM_Encoder.h
+ ../Core/Inc/RPM_Encoder.h ../Core/Inc/mylibrary.h
 ../Core/Inc/RPM_Encoder.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -64,3 +64,4 @@ Core/Src/RPM_Encoder.o: ../Core/Src/RPM_Encoder.c \
 ../Core/Inc/delay.h:
 ../Core/Inc/motor.h:
 ../Core/Inc/RPM_Encoder.h:
+../Core/Inc/mylibrary.h:

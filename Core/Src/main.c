@@ -45,6 +45,7 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
+UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
@@ -58,15 +59,16 @@ static void MX_TIM2_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM4_Init(void);
+static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-PID_Param_t pid_par;
-double out_1, out_2, out_3;
-double rpm_1, rpm_2, rpm_3;
+PID_Param_t pid;
+double out_1, out_2, out_3=0;
+double rpm_1, rpm_2, rpm_3=0;
 
 #ifdef __GNUC__
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
@@ -80,19 +82,13 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 void pid_config(void){
-	pid_par.Kp=5;
-	pid_par.Ki=3;
-	pid_par.Kd=3;
-	pid_par.Ts=1;
-	pid_par.Anti_windup=Anti_windup_disabled;
-	pid_par.Anti_windup_error=10;
-	pid_par.Set_point_motor_1=V1;
-	pid_par.Set_point_motor_2=V2;
-	pid_par.Set_point_motor_3=V3;
-	pid_par.Outmin=-5;
-	pid_par.Outmax=5;
-
-	PID_init(&pid_par);
+	pid.Kp=0.3;
+	pid.Ki=0.2;
+	pid.Kd=0.005;
+	pid.target_val_1=V1;
+	pid.target_val_2=V2;
+	pid.target_val_3=V3;
+	PID_init(&pid);
 }
 /* USER CODE END 0 */
 
@@ -128,16 +124,21 @@ int main(void)
   MX_TIM1_Init();
   MX_USART2_UART_Init();
   MX_TIM4_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+
+//  memset(buffer, 0, sizeof(buffer));
+//  __HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
+
   systick_init_ms(8000000);
 	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 100);
-	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 100); //motor 2
+	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 0); //motor 2
 	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_3, 100); //motor 3
 
 //	HAL_GPIO_WritePin(DIRECTION_1_GPIO_Port, DIRECTION_1_Pin, GPIO_PIN_RESET);
-//	HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DIRECTION_2_GPIO_Port, DIRECTION_2_Pin, GPIO_PIN_SET);
 //	HAL_GPIO_WritePin(DIRECTION_3_GPIO_Port, DIRECTION_3_Pin, GPIO_PIN_RESET);
-
+//
 //	flag_rot_1=false;
 //	flag_rot_2=false;
 //	flag_rot_3=false;
@@ -161,10 +162,8 @@ int main(void)
 
   /*
    * max is 1m/s
-   */
+   */HAL_Delay(1000);
 	Robot_Move(1, 225, 0);
-
-	HAL_Delay(500);
 
   while (1)
   {
@@ -428,6 +427,39 @@ static void MX_TIM4_Init(void)
   /* USER CODE BEGIN TIM4_Init 2 */
 
   /* USER CODE END TIM4_Init 2 */
+
+}
+
+/**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
 
 }
 

@@ -36,6 +36,8 @@ extern "C" {
 #include "motor.h"
 #include <stdio.h>
 #include "RPM_Encoder.h"
+#include "mylibrary.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -77,7 +79,7 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim4;
 
-extern PID_Param_t pid_par;
+extern PID_Param_t pid;
 extern void pid_config(void);
 
 extern double rpm_1, rpm_2, rpm_3;

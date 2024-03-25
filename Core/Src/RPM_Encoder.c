@@ -25,7 +25,7 @@ double get_rpm(int motor){
 	ResetLoop(flag_rot);
 	volatile uint16_t a=millis();
 
-	while(millis()- a <=500){
+	while(millis()- a <=20){
 		switch (motor){
 			case MOTOR_1:
 				cnt = __HAL_TIM_GET_COUNTER(&htim1);
@@ -41,7 +41,7 @@ double get_rpm(int motor){
 		}
 		CountLoop(cnt, flag_rot);
 	}
-	rpm= ((double)loop*65000+((flag_rot)?(double)(65535-cnt):(double)cnt))/47000*2*60;
+	rpm= ((double)loop*65000+((flag_rot)?(double)(65535-cnt):(double)cnt))/47000*50*60;
 
 	return rpm;
 }
