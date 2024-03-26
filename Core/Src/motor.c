@@ -31,14 +31,14 @@ bool flag_rot_1,
 flag_rot_2,
 flag_rot_3=false;
 
-double prev_duty_1, prev_duty_2=0, prev_duty_3=100;
+double prev_duty_1=100, prev_duty_2=100, prev_duty_3=100;
 double duty=100;
 void Robot_Move(float Vd, float Theta, float Vtheta){
 	double V1_abs, V2_abs, V3_abs, Vmax, Temp;
 
-	V2=Vd*(-0.87*cos(Theta*PI/180)-0.5*sin(Theta*PI/180));
-	V3=Vd*(0.87*cos(Theta*PI/180)-0.5*sin(Theta*PI/180));
-	V1=Vd*sin(Theta*PI/180);
+	V2=Vd*(-0.87*cos(Theta*PI/180)-0.5*sin(Theta*PI/180))+Vtheta;
+	V3=Vd*(0.87*cos(Theta*PI/180)-0.5*sin(Theta*PI/180))+Vtheta;
+	V1=Vd*sin(Theta*PI/180)+Vtheta;
 
 	V1_abs=fabs(V1);
 	V2_abs=fabs(V2);
@@ -89,7 +89,7 @@ void Robot_Move(float Vd, float Theta, float Vtheta){
 	V1=v2rpm(V1);
 	V2=v2rpm(V2);
 	V3=v2rpm(V3);
-	V2=20;
+	V3=100;
 	pid_config();
 
 //	duty_V1=rpm_to_duty(V1);

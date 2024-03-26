@@ -6,7 +6,8 @@
 	int loop=0;
 	bool flag_rot;
 double get_rpm(int motor){
-	reset_tick();
+	const uint32_t timeout = 100U *osKernelGetSysTimerFreq()/1000000u * 200;
+//	reset_tick();
 
 	switch (motor){
 		case MOTOR_1:
@@ -23,9 +24,8 @@ double get_rpm(int motor){
 			break;
 	}
 	ResetLoop(flag_rot);
-	volatile uint16_t a=millis();
-
-	while(millis()- a <=20){
+	volatile uint32_t a=osKernelGetSysTimerCount();
+	while(osKernelGetSysTimerCount()- a <= timeout){
 		switch (motor){
 			case MOTOR_1:
 				cnt = __HAL_TIM_GET_COUNTER(&htim1);

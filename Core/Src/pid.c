@@ -54,7 +54,7 @@ double PID_Calculation(int motor, double actual_val){
 			err_next=err_next_1;
 			prev_actual_val=pre_actual_val_1;
 
-			update_motor_values(target_val_1, actual_val,pre_actual_val_1);
+			actual_val=update_motor_values(target_val_1, actual_val, pre_actual_val_1);
 
 			pre_actual_val_1=actual_val;
 			err_last_1=err_last;
@@ -76,7 +76,7 @@ double PID_Calculation(int motor, double actual_val){
 			err_last=err_last_3;
 			err_next=err_next_3;
 
-			update_motor_values(target_val_3, actual_val, pre_actual_val_3);
+			actual_val=update_motor_values(target_val_3, actual_val, pre_actual_val_3);
 
 			pre_actual_val_3=actual_val;
 			err_last_3=err_last;
@@ -88,20 +88,20 @@ double PID_Calculation(int motor, double actual_val){
 }
 
 void PID(void){
-	printf("V1= %.2f rpm \t V2= %.2f rpm \t V3= %.2f rpm \r\n", V1,V2,V3);
+//	printf("V1= %.2f rpm \t V2= %.2f rpm \t V3= %.2f rpm \r\n", V1,V2,V3);
 
-	rpm_1=get_rpm(MOTOR_1);
-	rpm_2=get_rpm(MOTOR_2);
+//	rpm_1=get_rpm(MOTOR_1);
+//	rpm_2=get_rpm(MOTOR_2);
 	rpm_3=get_rpm(MOTOR_3);
 
 //	out_1=PID_Calculation(MOTOR_1, rpm_1);
-	out_2=PID_Calculation(MOTOR_2, rpm_2);
+//	out_2=PID_Calculation(MOTOR_2, rpm_2);
 //	out_3=PID_Calculation(MOTOR_3, rpm_3);
 
 //	set_duty_cycle(MOTOR_1, out_1);
-	set_duty_cycle(MOTOR_2, out_2);
+//	set_duty_cycle(MOTOR_2, out_2);
 //	set_duty_cycle(MOTOR_3, out_3);
 
-	printf("out_1: %f \t out_2: %f \t out_3: %f \r \n",out_1,out_2,out_3);
+//	printf("out_1: %f \t out_2: %f \t out_3: %f \r \n",out_1,out_2,out_3);
 	printf("rpm_1: %.2f \t rpm_2: %.2f \t rpm_3: %.2f \r \n \r\n", rpm_1, rpm_2, rpm_3);
 }

@@ -56,7 +56,6 @@ uint8_t string_compare(char array1[], char array2[], uint16_t length){
 }
 
 void Message_handler(){
-	printf("buffer: %c \r\n", buffer);
 	switch (buffer[0]){
 	case FORWARD:
 		Robot_Move(0.2, 225, 0);

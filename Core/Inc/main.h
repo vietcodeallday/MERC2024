@@ -31,6 +31,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "cmsis_os.h"
+
 #include "pid.h"
 #include "delay.h"
 #include "motor.h"
@@ -84,7 +86,11 @@ extern void pid_config(void);
 
 extern double rpm_1, rpm_2, rpm_3;
 extern double out_1, out_2, out_3;
-
+extern osMessageQueueId_t buttonHandle;
+typedef struct {                                // object data type
+  char buffer[1];
+  uint8_t buffer_index;
+} MSGQUEUE_OBJ_t;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

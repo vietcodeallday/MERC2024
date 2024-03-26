@@ -26,14 +26,31 @@
 #include "stm32f4xx_it.h"
 
 volatile uint64_t ms,rms;
-void systick_init_ms(uint32_t freq) /*Frequency in MHz*/
+//volatile uint64_t millis_count = 0;
+void systick_init_ms(uint32_t frequency) /*Frequency in MHz*/
 	{
-	__disable_irq();
-	SysTick->LOAD=(freq/1000)-1;
-	SysTick->VAL=0;
-	SysTick->CTRL=7; //0b00000111;
-	NVIC_SetPriority(SysTick_IRQn,7);
-	__enable_irq();	
+	TIM_HandleTypeDef htim10;
+
+	    // Disable interrupts
+	    __disable_irq();
+
+	    // Initialize TIM10 peripheral
+	    htim10.Instance = TIM10;
+	    htim10.Init.Prescaler = HAL_RCC_GetPCLK1Freq() / 1000000 - 1; // Assuming PCLK1 frequency in MHz
+	    htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
+	    htim10.Init.Period = (1000000 / frequency) - 1; // Frequency in Hz
+	    htim10.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	    HAL_TIM_Base_Init(&htim10);
+
+	    // Enable TIM10 interrupts
+	    HAL_NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 0, 0); // Set priority as needed
+	    HAL_NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
+
+	    // Start TIM10 counter
+	    HAL_TIM_Base_Start_IT(&htim10);
+
+	    // Re-enable interrupts
+	    __enable_irq();
 }
 
 uint64_t millis(void)
@@ -42,11 +59,12 @@ uint64_t millis(void)
 	rms=ms; //store current ms in rms
 	__enable_irq();
 	return rms;
+
 	}
 
 void reset_tick(void){
-	ms=0;
 	rms=0;
+	ms=0;
 }
 
 void delay(uint32_t delay)

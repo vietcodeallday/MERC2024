@@ -29,6 +29,7 @@
 #include <stdint.h>
 
 extern volatile uint64_t ms,rms;
+//extern volatile uint64_t millis_count;
 extern uint64_t millis(void);
 void systick_init_ms(uint32_t freq);
 void delay(uint32_t delay);
